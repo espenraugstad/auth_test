@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Auth Test</title>
+  </head>
+  <style>
+    p {
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+  <body>
+    <h1>Profile</h1>
+    <img src="" alt="" id="profile" />
+    <p><span id="name"></span> <span id="email"></span></p>
+    <button id="btn1" onclick="location.href='/logout'">Logout</button>
+
+    <script>
+      const profile = document.getElementById("profile");
+      const name = document.getElementById("name");
+      const email = document.getElementById("email");
+
+      window.onload = async () => {
+        let response = await fetch("/getProfile", {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+        });
+
+        let data = await response.json();
+
+        profile.src = data.picture;
+        name.innerHTML = data.name;
+        email.innerHTML = data.email;
+        console.log(data);
+      };
+    </script>
+  </body>
+</html>
